@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.fangqcloud.mapper.ClassMapper">
+    <resultMap id="BaseResultMap" type="club.fangqcloud.pojo.Classes">
+        <id column="classId" jdbcType="VARCHAR" property="classId"/>
+        <result column="className" jdbcType="VARCHAR" property="className"/>
+        <result column="capacity" jdbcType="INTEGER" property="capacity"/>
+    </resultMap>
+    
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="String">
+        select * from classes
+        <where>
+            <if test="className != null and className != ''">
+                and className = #{className}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimary" resultMap="BaseResultMap" parameterType="String">
+        select * from classes
+        where classId = #{classId}
+    </select>
+
+    <update id="update" parameterType="club.fangqcloud.pojo.Classes">
+        update classes
+        set className = #{className},capacity = #{capacity}
+        where classId = #{classId}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from classes
+        where classId = #{classId}
+    </delete>
+
+    <insert id="insert" parameterType="club.fangqcloud.pojo.Classes">
+        insert into classes(classId, className, capacity)
+        value(#{classId}, #{className}, #{capacity})
+    </insert>
+</mapper>
