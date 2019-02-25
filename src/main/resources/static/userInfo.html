@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 
     <script>DD_belatedPNG.fix('*');</script>
-    <title>班级管理</title>
+    <title>个人信息</title>
     <style>
         .table td{
             text-align: center;
@@ -26,56 +26,61 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 班级管理 <span class="c-gray en">&gt;</span> 班级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 个人信息 <span class="c-gray en">&gt;</span> 信息展示 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" id="app">
     <div class="text-c">
-        <input type="text" placeholder="班级名称" style="width:250px" class="input-text" v-model="className">
-        <button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜班级</button>
+        <!--<input type="text" placeholder="课程名称" style="width:250px" class="input-text" v-model="courseName">-->
+        <!--<button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜课程</button>-->
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
-			<a href="javascript:;" v-on:click="" class="btn btn-danger radius">
-				<i class="Hui-iconfont">&#xe6e2;</i> 批量删除
-			</a>
-			<a class="btn btn-primary radius" @Click="class_add('添加班级','class_add.html','','480')">
-				<i class="Hui-iconfont">&#xe600;</i> 添加
-			</a>
+			<!--<a href="javascript:;" @Click="" class="btn btn-danger radius">-->
+				<!--<i class="Hui-iconfont">&#xe6e2;</i> 批量删除-->
+			<!--</a>-->
+			<!--<a class="btn btn-primary radius" @Click="course_add('添加课程','course_add.html','','480')">-->
+				<!--<i class="Hui-iconfont">&#xe600;</i> 添加-->
+			<!--</a>-->
 		</span>
-        <span class="r">共有数据：<strong>{{pageInfo.total}}</strong> 条</span> </div>
-    <div class="mt-20">
-        <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
-            <thead>
+        <span class="r">共有数据：<strong>1</strong> 条</span> </div>
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+                <thead>
                 <tr class="text-c">
                     <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th width="20">班级编号</th>
-                    <th width="20">班级名称</th>
-                    <th width="20">班级容量</th>
-                    <th width="120">操作</th>
+                    <th width="20">用户编号</th>
+                    <th width="20">用户名称</th>
+                    <th width="20">用户密码</th>
+                    <th width="20">姓名</th>
+                    <th width="120">性别</th>
+                    <th width="120">年龄</th>
+                    <th width="120">班级编号</th>
+                    <th width="60">操作</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item,index) in pageInfo.list">
-                    <td width="25"><input type="checkbox" name="" value="{{item.classId}}"></td>
-                    <td width="80">{{item.classId}}</td>
-                    <td width="80">{{item.className}}</td>
-                    <td width="60">{{item.capacity}}</td>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="25"><input type="checkbox" name=""></td>
+                    <td width="80">{{userInfo.userId}}</td>
+                    <td width="80">{{userInfo.userName}}</td>
+                    <td width="60">{{userInfo.password}}</td>
+                    <td width="60">{{userInfo.studentName}}</td>
+                    <td width="60" v-if="userInfo.sex==1">男</td>
+                    <td width="60" v-if="userInfo.sex==2">女</td>
+                    <td width="60">{{userInfo.age}}</td>
+                    <td width="60">{{userInfo.classId}}</td>
                     <td width="120">
-
-                        <a @Click="class_modify('class_modify','class_modify.html?classId='+item.classId,'','300')">
+                        <a @Click="user_modify('user_modify','user_modify.html?userId='+userInfo.userId,'','300')">
                             <i class="Hui-iconfont">&#xe6df;</i>
-                        </a>
-
-                        <a @Click="class_delete(item.classId)">
-                            <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <div style="margin: 30px auto; width: 130px">
-            <button @Click="previous" style="height: 30px;line-height: 30px;width: 60px;">上一页</button>
-            <button @Click="next" style="height: 30px;line-height: 30px;width: 60px;">下一页</button>
+            <div style="margin: 30px auto; width: 130px">
+                <!--<button @Click="previous" style="height: 30px;line-height: 30px;width: 60px;">上一页</button>-->
+                <!--<button @Click="next" style="height: 30px;line-height: 30px;width: 60px;">下一页</button>-->
+            </div>
         </div>
     </div>
 </div>
@@ -89,49 +94,28 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-<script src="/js/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     var app = new Vue({
         el: '#app',
         data:{
-            pageInfo:{
-                pageNum: 1,
-                pageSize: 3
-            },
-            className:""
+            userInfo:{}
         },
         created: function(){
-            this.getList("/class/getByCondition.do")
+            this.getList("/user/getUserInfo.do?userId=1550989921312")
         },
         methods: {
-            class_delete: function (classId) {
-                $.ajax({
-                    url: '/class/remove.do?classId='+classId,
-                    dataType: 'json',
-                    success: function (res) {
-                        if(res){
-                            layer.msg("删除成功", {time: 1000, icon:1}, function(){
-                               window.location.reload()
-                            });
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error)
-                    }
-                })
-            },
             getList: function(url){
                 $.ajax({
                     url: url,
-                    data:{
-                        pageNum: this.pageInfo.pageNum,
-                        pageSize: this.pageInfo.pageSize
-                    },
+                    data: {},
                     type: 'GET',
                     dataType: 'json',
+                    async: true,
                     success: function (res) {
-                        app.pageInfo = res
+                        console.log(res)
+                        app.userInfo = res[0]
                     },
                     error: function(error){
                         console.log("error:"+error)
@@ -148,20 +132,20 @@
                     this.pageInfo.pageNum = this.pageInfo.nextPage;
                 this.getList("/class/getByCondition.do")
             },
-            class_modify: function(title,url,w,h){
+            user_modify: function(title,url,w,h){
                 layer_show(title,url,w,h);
             },
-            class_add: function(title,url,w,h){
+            course_add: function(title,url,w,h){
                 layer_show(title,url,w,h);
             },
             search: function () {
-                this.getList("/class/getByCondition.do?className="+this.className)
+                this.getList("/course/getByCondition.do?courseName="+this.courseName)
             }
 
         }
     })
 
-
 </script>
+
 </body>
 </html>

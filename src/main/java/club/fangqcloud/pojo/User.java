@@ -9,6 +9,8 @@ public class User {
   private long type;
   private String email;
 
+//  private Teacher teacher;
+//  private Student student;
 
   public String getUserId() {
     return userId;
@@ -53,6 +55,23 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
+
+
+//  public Teacher getTeacher() {
+//    return teacher;
+//  }
+//
+//  public void setTeacher(Teacher teacher) {
+//    this.teacher = teacher;
+//  }
+//
+//  public Student getStudent() {
+//    return student;
+//  }
+//
+//  public void setStudent(Student student) {
+//    this.student = student;
+//  }
 
   @Override
   public String toString() {

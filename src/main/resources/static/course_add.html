@@ -19,35 +19,43 @@
     <script>DD_belatedPNG.fix('*');</script>
     <!--/meta 作为公共模版分离出去-->
 
-    <title>编辑班级</title>
+    <title>添加课程</title>
 </head>
 <body>
 <article class="page-container" id="app">
     <form class="form form-horizontal" id="form-article-add">
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>班级ID：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程编号：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="0001" v-model="pageInfo.classId" disabled>
+                <input type="text" class="input-text" placeholder="0001" v-model="pageInfo.courseId">
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>班级名称：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="16软卓1班" v-model="pageInfo.className">
+                <input type="text" class="input-text" placeholder="高数" v-model="pageInfo.courseName">
             </div>
         </div>
+
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>容量：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程时期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="30" v-model="pageInfo.capacity">
+                <input type="text" class="input-text" placeholder="17年上半学期" v-model="pageInfo.coursePeriod">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>教师编号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="0001" v-model="pageInfo.teacherId">
             </div>
         </div>
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <input @Click="upload" class="btn btn-primary radius" value="保存并提交" type="button" />
+                <input @Click="upload" class="btn btn-primary radius" type="button" value="保存并提交" />
             </div>
         </div>
     </form>
@@ -71,40 +79,29 @@
 <script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script src="/js/vue.js"></script>
 <script type="text/javascript">
-
     var app = new Vue({
         el: '#app',
         data:{
             pageInfo:{
-                classId: "",
-                className: "",
-                capacity:""
+                courseId: "",
+                courseName: "",
+                coursePeriod: "",
+                teacherId: ""
             }
         },
         created: function(){
-            var url = window.location.href
-            var urlArr = url.split("classId=")
-            var classId = urlArr[1]
-            $.ajax({
-                url: '/class/getByPrimary.do?classId='+classId,
-                dataType: 'json',
-                success: function (jdata) {
-                    app.pageInfo = jdata
-                },
-                error: function (error) {
-                }
-            })
+
         },
         methods:{
             upload: function(){
                 $.ajax({
-                    url: '/class/modify.do',
+                    url: '/course/add.do',
                     method: 'POST',
                     data: this.pageInfo,
                     dataType: 'json',
                     success: function (res) {
                         if(res){
-                            layer.msg("编辑成功", {time: 1000, icon:1}, function(){
+                            layer.msg("添加成功", {time: 1000, icon:1}, function(){
                                 var index = parent.layer.getFrameIndex(window.name);
                                 window.parent.location.reload();
                                 parent.layer.close(index);
@@ -116,18 +113,15 @@
                                 parent.layer.close(index);
                             });
                         }
+
                     },
                     error: function (error) {
-                        alert("未修改成功")
+                        alert("未添加成功")
                     }
                 })
             }
         }
     })
-
-
-
-
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

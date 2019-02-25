@@ -17,6 +17,7 @@ public class ClassController {
     @Autowired
     private ClassService classService;
 
+
     @RequestMapping("/getByCondition.do")
     @ResponseBody
     public PageInfo<Classes> getByCondition(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "3") Integer pageSize,String className){
@@ -26,11 +27,13 @@ public class ClassController {
         return pageInfo;
     }
 
+
     @RequestMapping("/modify.do")
     @ResponseBody
     public Boolean modify(Classes pageInfo){
         return classService.update(pageInfo);
     }
+
 
     @RequestMapping("/getByPrimary.do")
     @ResponseBody

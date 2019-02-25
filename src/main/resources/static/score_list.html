@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 
     <script>DD_belatedPNG.fix('*');</script>
-    <title>班级管理</title>
+    <title>成绩管理</title>
     <style>
         .table td{
             text-align: center;
@@ -26,57 +26,33 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 班级管理 <span class="c-gray en">&gt;</span> 班级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> c成绩管理 <span class="c-gray en">&gt;</span> 成绩列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" id="app">
     <div class="text-c">
-        <input type="text" placeholder="班级名称" style="width:250px" class="input-text" v-model="className">
-        <button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜班级</button>
+        <input type="text" placeholder="课程名称" style="width:250px" class="input-text" v-model="courseName">
+        <button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜成绩</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-		<span class="l">
-			<a href="javascript:;" v-on:click="" class="btn btn-danger radius">
-				<i class="Hui-iconfont">&#xe6e2;</i> 批量删除
-			</a>
-			<a class="btn btn-primary radius" @Click="class_add('添加班级','class_add.html','','480')">
-				<i class="Hui-iconfont">&#xe600;</i> 添加
-			</a>
-		</span>
-        <span class="r">共有数据：<strong>{{pageInfo.total}}</strong> 条</span> </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
             <thead>
                 <tr class="text-c">
                     <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th width="20">班级编号</th>
-                    <th width="20">班级名称</th>
-                    <th width="20">班级容量</th>
-                    <th width="120">操作</th>
+                    <th width="20">课程编号</th>
+                    <th width="20">课程名称</th>
+                    <th width="20">任课老师</th>
+                    <th width="20">成绩</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,index) in pageInfo.list">
+                <tr v-for="(item,index) in pageInfo">
                     <td width="25"><input type="checkbox" name="" value="{{item.classId}}"></td>
-                    <td width="80">{{item.classId}}</td>
-                    <td width="80">{{item.className}}</td>
-                    <td width="60">{{item.capacity}}</td>
-                    <td width="120">
-
-                        <a @Click="class_modify('class_modify','class_modify.html?classId='+item.classId,'','300')">
-                            <i class="Hui-iconfont">&#xe6df;</i>
-                        </a>
-
-                        <a @Click="class_delete(item.classId)">
-                            <i class="Hui-iconfont">&#xe6e2;</i>
-                        </a>
-                    </td>
+                    <td width="80">{{item.courseId}}</td>
+                    <td width="80">{{item.courseName}}</td>
+                    <td width="60">{{item.teacherName}}</td>
+                    <td width="60">{{item.grade}}</td>
                 </tr>
             </tbody>
         </table>
-
-        <div style="margin: 30px auto; width: 130px">
-            <button @Click="previous" style="height: 30px;line-height: 30px;width: 60px;">上一页</button>
-            <button @Click="next" style="height: 30px;line-height: 30px;width: 60px;">下一页</button>
-        </div>
     </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
@@ -95,38 +71,18 @@
     var app = new Vue({
         el: '#app',
         data:{
-            pageInfo:{
-                pageNum: 1,
-                pageSize: 3
-            },
-            className:""
+            pageInfo:[],
+            courseName: ""
         },
         created: function(){
-            this.getList("/class/getByCondition.do")
+            this.getList("/student/getScore.do?studentId=1550989921312")
         },
         methods: {
-            class_delete: function (classId) {
-                $.ajax({
-                    url: '/class/remove.do?classId='+classId,
-                    dataType: 'json',
-                    success: function (res) {
-                        if(res){
-                            layer.msg("删除成功", {time: 1000, icon:1}, function(){
-                               window.location.reload()
-                            });
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error)
-                    }
-                })
-            },
             getList: function(url){
                 $.ajax({
                     url: url,
                     data:{
-                        pageNum: this.pageInfo.pageNum,
-                        pageSize: this.pageInfo.pageSize
+
                     },
                     type: 'GET',
                     dataType: 'json',
@@ -155,7 +111,7 @@
                 layer_show(title,url,w,h);
             },
             search: function () {
-                this.getList("/class/getByCondition.do?className="+this.className)
+                this.getList("/student/getScore.do?studentId=1550989921312&courseName="+this.courseName)
             }
 
         }

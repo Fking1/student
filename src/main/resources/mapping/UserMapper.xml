@@ -9,6 +9,8 @@
         <result column="type" jdbcType="INTEGER" property="type"></result>
     </resultMap>
 
+
+
     <insert id="insert" parameterType="club.fangqcloud.pojo.User">
         insert into user(userId, userName, password, type, email)
         values(#{userId}, #{userName}, #{password}, #{type}, #{email})
@@ -18,7 +20,7 @@
         select * from user
         <where>
             <if test="userId != null and userId !=''">
-                and userId = #{userId},
+                and userId = #{userId}
             </if>
             <if test="userName != null and userName !=''">
                 and userName = #{userName}
@@ -26,13 +28,19 @@
             <if test="password != null and password !=''">
                 and password = #{password}
             </if>
-            <!--<if test="email != null and email !=''">-->
-                <!--and email = #{email},-->
-            <!--</if>-->
-            <!--<if test="userId != null and userId !=''">-->
-                <!--and type = #{type},-->
-            <!--</if>-->
         </where>
+    </select>
+
+    <select id="selectTeacherInfo" parameterType="String" resultType="Map">
+        select userId, userName, password, type, email, teacher.teacherName, teacher.age, teacher.sex, teacher.classId
+        from user, teacher
+        where user.userId = teacher.teacherId and userId = #{userId}
+    </select>
+
+    <select id="selectStudentInfo" parameterType="String" resultType="Map">
+        select userId, userName, password, type, email, student.studentName, student.sex, student.age, student.classId
+        from user, student
+        where user.userId = student.studentId and userId = #{userId}
     </select>
 
 </mapper>

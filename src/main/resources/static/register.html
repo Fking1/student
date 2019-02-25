@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/js/vue.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
     <style>
         body {
             padding-top: 20px;
@@ -68,35 +64,38 @@
 
     </style>
 </head>
-
 <body>
-<div class="container-fluid all">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation"><a href="/index.html">Index</a></li>
-                <li role="presentation" class="active"><a href="/register.jsp">Register</a></li>
-                <li role="presentation"><a href="/login.html">Login</a></li>
-            </ul>
-        </nav>
-        <img src="/images/icon.jpg" class="text-muted headerIcon">
+    <div class="container-fluid all">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="/index.html">Index</a></li>
+                    <li role="presentation" class="active"><a href="/register.jsp">Register</a></li>
+                    <li role="presentation"><a href="/login.html">Login</a></li>
+                </ul>
+            </nav>
+            <img src="/images/icon.jpg" class="text-muted headerIcon">
+        </div>
+        <form class="form-signin" id="app">
+            <h1 class="form-signin-heading">Register</h1>
+            <input type="text" class="form-control" placeholder="Your userName" required autofocus pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="userInfo.userName">
+            <input type="password" class="form-control" placeholder="Password" required pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="userInfo.password">
+            <input type="password" class="form-control" placeholder="Confirm your password" required pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="confirmPassword">
+            <input type="email" class="form-control" placeholder="Input your mail" required="required" v-model="userInfo.email">
+            <select class="form-control selectpicker type" v-model="userInfo.type" style="height: 40px">
+                <option value="1" selected>教师</option>
+                <option value="2">学生</option>
+            </select>
+            <div style="height: 5px"></div>
+            <input class="btn btn-lg btn-primary btn-block" @Click="register" type="button" value="Register" disabled id="submit" />
+        </form>
     </div>
-    <form class="form-signin" id="app">
-        <h1 class="form-signin-heading">Register</h1>
-        <input type="text" class="form-control" placeholder="Your userName" required autofocus pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="userInfo.userName">
-        <input type="password" class="form-control" placeholder="Password" required pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="userInfo.password">
-        <input type="password" class="form-control" placeholder="Confirm your password" required name="password1" pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$" v-model="confirmPassword">
-        <input type="email" class="form-control" placeholder="Input your mail" required v-model="userInfo.email">
-        <select class="form-control selectpicker type" v-model="userInfo.type">
-            <option value="1" selected>教师</option>
-            <option value="2">学生</option>
-        </select>
-        <button class="btn btn-lg btn-primary btn-block" @Click="register">Register</button>
-    </form>
-</div>
-<script>
+    <script src="/js/vue.js"></script>
 
-    var app = new Vue({
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    new Vue({
         el: '#app',
         data:{
             userInfo:{
@@ -107,17 +106,16 @@
             },
             confirmPassword:""
         },
-        created:{
-
-        },
         methods:{
             register: function () {
                 $.ajax({
                     url: '/user/register.do',
                     data: this.userInfo,
                     dataType: 'json',
+                    async: false,
                     success: function (res) {
                         if(res){
+                            alert("注册成功")
                             window.location.href = "/login.html";
                         }else{
                             alert("注册失败，请重新注册")
@@ -125,41 +123,19 @@
                         }
                     },
                     error: function (error) {
-                        console.log(error)
+                        alert("发生错误,请重试")
                     }
                 })
             }
         },
-        watch:{
-
-
+        watch: {
+            confirmPassword: function () {
+                if(this.confirmPassword == this.userInfo.password){
+                    $("#submit").removeAttr("disabled")
+                }
+            }
         }
     })
-
-
-    // $("#inputPassword").on("input",function (event) {
-    //     var password = $(this).val();
-    //     var confirmPassword = $("#confirmPassword").val();
-    //     if(password==confirmPassword){
-    //         $("#submit").removeAttr("disabled");
-    //     }
-    //     else{
-    //         $("#submit").attr("disabled",true);
-    //     }
-    // })
-    // $("#confirmPassword").on("input",function (event) {
-    //     var password = $("#inputPassword").val();
-    //     var confirmPassword = $(this).val();
-    //     if(password==confirmPassword){
-    //         $("#submit").removeAttr("disabled");
-    //     }
-    //     else{
-    //         $("#submit").attr("disabled",true);
-    //     }
-    // })
-
-
-
 </script>
 </body>
 </html>

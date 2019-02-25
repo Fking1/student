@@ -19,7 +19,7 @@
     <script>DD_belatedPNG.fix('*');</script>
     <!--/meta 作为公共模版分离出去-->
 
-    <title>编辑班级</title>
+    <title>添加班级</title>
 </head>
 <body>
 <article class="page-container" id="app">
@@ -47,7 +47,7 @@
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button @Click="upload" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+                <input @Click="upload" class="btn btn-primary radius" type="button" value="保存并提交">
             </div>
         </div>
     </form>
@@ -92,21 +92,23 @@
                     data: this.pageInfo,
                     dataType: 'json',
                     success: function (res) {
-                        console.log(res)
-                        alert(res)
                         if(res){
                             layer.msg("添加成功", {time: 1000, icon:1}, function(){
-                                // window.location.reload()
+                                var index = parent.layer.getFrameIndex(window.name);
+                                window.parent.location.reload();
+                                parent.layer.close(index);
                             });
                         }else{
                             layer.msg("添加失败", {time: 1000, icon:1}, function(){
-                                // window.location.reload()
+                                var index = parent.layer.getFrameIndex(window.name);
+                                window.parent.location.reload();
+                                parent.layer.close(index);
                             });
                         }
 
                     },
                     error: function (error) {
-                        console.log("未修改成功")
+                        alert("未添加成功")
                     }
                 })
             }

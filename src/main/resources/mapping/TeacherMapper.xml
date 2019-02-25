@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.fangqcloud.mapper.TeacherMapper">
+    <resultMap id="BaseResultMap" type="club.fangqcloud.pojo.Teacher">
+        <id column="teacherId" jdbcType="VARCHAR" property="teacherId"/>
+        <result column="teacherName" jdbcType="VARCHAR" property="teacherName"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"></result>
+        <result column="classId" jdbcType="VARCHAR" property="classId"></result>
+    </resultMap>
+
+   <insert id="insert" parameterType="club.fangqcloud.pojo.Teacher">
+       replace into teacher(teacherId, teacherName, age, sex, classId) values(#{userId}, #{teacherName}, #{age}, #{sex}, #{classId})
+   </insert>
+
+
+    <select id="selectGrade" parameterType="String" resultType="Map">
+      select student.studentId, student.studentName,course.courseId, course.courseName,score.grade
+      from student,teacher,score,course
+      where teacher.teacherId = course.teacherId
+      and course.courseId = score.courseId
+      and score.studentId = student.studentId
+      and teacher.teacherId = #{teacherId}
+    </select>
+</mapper>

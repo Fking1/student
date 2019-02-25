@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 
     <script>DD_belatedPNG.fix('*');</script>
-    <title>班级管理</title>
+    <title>学生管理</title>
     <style>
         .table td{
             text-align: center;
@@ -26,18 +26,25 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 班级管理 <span class="c-gray en">&gt;</span> 班级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 学生管理
+    <span class="c-gray en">&gt;</span> 学生列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
 <div class="page-container" id="app">
     <div class="text-c">
-        <input type="text" placeholder="班级名称" style="width:250px" class="input-text" v-model="className">
-        <button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜班级</button>
+        <input type="text" placeholder="学生编号" style="width:250px" class="input-text" v-model="studentId">
+        <input type="text" placeholder="班级编号" style="width:250px" class="input-text" v-model="classId">
+        <button class="btn btn-success" type="button" @Click="search"><i class="Hui-iconfont">&#xe665;</i> 搜学生</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
 			<a href="javascript:;" v-on:click="" class="btn btn-danger radius">
 				<i class="Hui-iconfont">&#xe6e2;</i> 批量删除
 			</a>
-			<a class="btn btn-primary radius" @Click="class_add('添加班级','class_add.html','','480')">
+			<a class="btn btn-primary radius" @Click="student_add('添加学生','student_add.html','','480')">
 				<i class="Hui-iconfont">&#xe600;</i> 添加
 			</a>
 		</span>
@@ -47,25 +54,28 @@
             <thead>
                 <tr class="text-c">
                     <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="40">学生编号</th>
+                    <th width="20">学生姓名</th>
+                    <th width="20">学生性别</th>
+                    <th width="20">学生年龄</th>
                     <th width="20">班级编号</th>
-                    <th width="20">班级名称</th>
-                    <th width="20">班级容量</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item,index) in pageInfo.list">
                     <td width="25"><input type="checkbox" name="" value="{{item.classId}}"></td>
-                    <td width="80">{{item.classId}}</td>
-                    <td width="80">{{item.className}}</td>
-                    <td width="60">{{item.capacity}}</td>
+                    <td width="40">{{item.studentId}}</td>
+                    <td width="20">{{item.studentName}}</td>
+                    <td width="20">{{item.sex}}</td>
+                    <td width="20">{{item.age}}</td>
+                    <td width="60">{{item.classId}}</td>
                     <td width="120">
-
-                        <a @Click="class_modify('class_modify','class_modify.html?classId='+item.classId,'','300')">
+                        <a @Click="student_modify('student_modify','student_modify.html?studentId='+item.studentId,'','300')">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
 
-                        <a @Click="class_delete(item.classId)">
+                        <a @Cclick="student_delete(item.studentId)">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
                     </td>
@@ -74,8 +84,8 @@
         </table>
 
         <div style="margin: 30px auto; width: 130px">
-            <button @Click="previous" style="height: 30px;line-height: 30px;width: 60px;">上一页</button>
-            <button @Click="next" style="height: 30px;line-height: 30px;width: 60px;">下一页</button>
+            <button v-on:click="previous" style="height: 30px;line-height: 30px;width: 60px;">上一页</button>
+            <button v-on:click="next" style="height: 30px;line-height: 30px;width: 60px;">下一页</button>
         </div>
     </div>
 </div>
@@ -99,15 +109,16 @@
                 pageNum: 1,
                 pageSize: 3
             },
-            className:""
+            studentId: "",
+            classId: ""
         },
         created: function(){
-            this.getList("/class/getByCondition.do")
+            this.getList("/student/getByCondition.do")
         },
         methods: {
-            class_delete: function (classId) {
+            student_delete: function (classId) {
                 $.ajax({
-                    url: '/class/remove.do?classId='+classId,
+                    url: '/student/remove.do?studentId='+studentId,
                     dataType: 'json',
                     success: function (res) {
                         if(res){
@@ -141,21 +152,35 @@
             previous: function(){
                 if(!this.pageInfo.isFirstPage)
                     this.pageInfo.pageNum = this.pageInfo.prePage
-                this.getList("/class/getByCondition.do")
+                this.getList("/student/getByCondition.do")
             },
             next: function () {
                 if(!this.pageInfo.isLastPage)
                     this.pageInfo.pageNum = this.pageInfo.nextPage;
-                this.getList("/class/getByCondition.do")
+                this.getList("/student/getByCondition.do")
             },
-            class_modify: function(title,url,w,h){
+            student_modify: function(title,url,w,h){
                 layer_show(title,url,w,h);
             },
-            class_add: function(title,url,w,h){
+            student_add: function(title,url,w,h){
                 layer_show(title,url,w,h);
             },
             search: function () {
-                this.getList("/class/getByCondition.do?className="+this.className)
+                var student = {}
+                student.studentId = this.studentId
+                student.classId = this.classId
+                $.ajax({
+                    url: 'student/getByCondition.do',
+                    data: student,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        app.pageInfo = res
+                    },
+                    error: function(error){
+                        console.log("error:"+error)
+                    }
+                })
             }
 
         }

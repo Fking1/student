@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.fangqcloud.mapper.StudentMapper">
+    <resultMap id="BaseResultMap" type="club.fangqcloud.pojo.Student">
+        <id column="studentId" jdbcType="VARCHAR" property="studentId"/>
+        <result column="studentName" jdbcType="VARCHAR" property="studentName"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="classId" jdbcType="VARCHAR" property="classId"/>
+    </resultMap>
+    
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="club.fangqcloud.pojo.Student">
+        select * from student
+        <where>
+            <if test="studentName != null and studentName != ''">
+                and studentName = #{studentName}
+            </if>
+            <if test="studentId != null and studentId != ''">
+                and studentId = #{studentId}
+            </if>
+            <if test="classId != null and classId != ''">
+                and classId = #{classId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimary" resultMap="BaseResultMap" parameterType="String">
+        select * from student
+        <where>
+            <if test="studentId != null and studentId != ''">
+                and studentId = #{studentId}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="club.fangqcloud.pojo.Student">
+        update student
+        set studentName = #{studentName}, sex = #{sex}, age = #{age}, classId = #{classId}
+        where studentId = #{studentId}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from student
+        where studentId = #{studentId}
+    </delete>
+
+    <insert id="insert" parameterType="club.fangqcloud.pojo.Student">
+        insert into student(studentId, studentName, sex, age, classId)
+        value(#{studentId}, #{studentName}, #{sex}, #{age}, #{classId})
+    </insert>
+
+    <insert id="add" parameterType="Map">
+        replace into student(studentId, studentName, sex, age, classId)
+        values(#{studentId}, #{studentName}, #{sex}, #{age}, #{classId})
+    </insert>
+
+    <select id="selectScore" parameterType="String" resultType="Map">
+      select course.courseId, course.courseName, grade, teacher.teacherName
+      from course, teacher, score, student
+      where
+        score.courseId = course.courseId
+        and score.studentId = student.studentId
+        and course.teacherId = teacher.teacherId
+        and student.studentId = #{studentId}
+        <if test="courseName != null and courseName != ''">
+            and course.courseName = #{courseName}
+        </if>
+    </select>
+</mapper>

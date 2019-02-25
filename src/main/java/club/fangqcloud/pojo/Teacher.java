@@ -1,4 +1,4 @@
-package com.sample;
+package club.fangqcloud.pojo;
 
 
 public class Teacher {
@@ -7,6 +7,7 @@ public class Teacher {
   private String teacherName;
   private long age;
   private long sex;
+  private String classId;
 
 
   public String getTeacherId() {
@@ -44,4 +45,12 @@ public class Teacher {
     this.sex = sex;
   }
 
+
+  public String getClassId() {
+    return classId;
+  }
+
+  public void setClassId(String classId) {
+    this.classId = classId;
+  }
 }

@@ -72,7 +72,17 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
-		<dl id="menu-article">
+
+        <dl id="menu-info">
+            <dt><i class="Hui-iconfont">&#xe616;</i> 个人信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="userInfo.html" data-title="个人信息" href="javascript:void(0)">个人信息</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+		<dl id="menu-class">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 班级管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -80,28 +90,37 @@
 				</ul>
 			</dd>
 		</dl>
-        <dl id="menu-policy">
+        <dl id="menu-course">
             <dt><i class="Hui-iconfont">&#xe616;</i> 课程管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="course-list.html" data-title="课程管理" href="javascript:void(0)">课程管理</a></li>
+                    <li><a data-href="course_list.html" data-title="课程管理" href="javascript:void(0)">课程管理</a></li>
                 </ul>
             </dd>
         </dl>
-		<dl id="menu-picture">
+		<dl id="menu-student">
 			<dt><i class="Hui-iconfont">&#xe613;</i> 学生管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="student-list.html" data-title="学生管理" href="javascript:void(0)">学生管理</a></li>
+					<li><a data-href="student_list.html" data-title="学生管理" href="javascript:void(0)">学生管理</a></li>
 				</ul>
 			</dd>
 		</dl>
 
-		<dl id="menu">
+		<dl id="menu-score">
 			<dt><i class="Hui-iconfont">&#xe613;</i> 成绩管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="score-list.html" data-title="成绩管理" href="javascript:void(0)">成绩管理</a></li>
+					<li><a data-href="score_list.html" data-title="成绩管理" href="javascript:void(0)">成绩管理</a></li>
+				</ul>
+			</dd>
+		</dl>
+
+		<dl id="menu-input">
+			<dt><i class="Hui-iconfont">&#xe613;</i> 成绩录入<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="score_input.html" data-title="成绩录入" href="javascript:void(0)">成绩录入</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -115,7 +134,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
+					<span title="我的桌面" data-href="/userInfo.html">我的桌面</span>
 					<em></em></li>
 		</ul>
 	</div>
@@ -124,7 +143,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="userInfo.html"></iframe>
 	</div>
 </div>
 </section>

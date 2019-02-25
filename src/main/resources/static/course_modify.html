@@ -19,29 +19,37 @@
     <script>DD_belatedPNG.fix('*');</script>
     <!--/meta 作为公共模版分离出去-->
 
-    <title>编辑班级</title>
+    <title>编辑课程</title>
 </head>
 <body>
 <article class="page-container" id="app">
     <form class="form form-horizontal" id="form-article-add">
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>班级ID：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程编号：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="0001" v-model="pageInfo.classId" disabled>
+                <input type="text" class="input-text" placeholder="0001" v-model="pageInfo.courseId" disabled>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>班级名称：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="16软卓1班" v-model="pageInfo.className">
+                <input type="text" class="input-text" value="" placeholder="高数" v-model="pageInfo.courseName">
             </div>
         </div>
+
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>容量：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程学期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="30" v-model="pageInfo.capacity">
+                <input type="text" class="input-text" value="" placeholder="2016上半学期" v-model="pageInfo.coursePeriod">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>教师编号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="0001" v-model="pageInfo.teacherId">
             </div>
         </div>
 
@@ -76,17 +84,18 @@
         el: '#app',
         data:{
             pageInfo:{
-                classId: "",
-                className: "",
-                capacity:""
+                courseId: "",
+                courseName: "",
+                coursePeriod: "",
+                teacherId: ""
             }
         },
         created: function(){
             var url = window.location.href
-            var urlArr = url.split("classId=")
-            var classId = urlArr[1]
+            var urlArr = url.split("courseId=")
+            var courseId = urlArr[1]
             $.ajax({
-                url: '/class/getByPrimary.do?classId='+classId,
+                url: '/course/getByPrimary.do?courseId='+courseId,
                 dataType: 'json',
                 success: function (jdata) {
                     app.pageInfo = jdata
@@ -98,7 +107,7 @@
         methods:{
             upload: function(){
                 $.ajax({
-                    url: '/class/modify.do',
+                    url: '/course/modify.do',
                     method: 'POST',
                     data: this.pageInfo,
                     dataType: 'json',
@@ -110,7 +119,7 @@
                                 parent.layer.close(index);
                             });
                         }else{
-                            layer.msg("添加失败", {time: 1000, icon:1}, function(){
+                            layer.msg("编辑失败", {time: 1000, icon:1}, function(){
                                 var index = parent.layer.getFrameIndex(window.name);
                                 window.parent.location.reload();
                                 parent.layer.close(index);

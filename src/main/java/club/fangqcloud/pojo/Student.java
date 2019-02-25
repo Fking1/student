@@ -4,7 +4,7 @@ package club.fangqcloud.pojo;
 public class Student {
 
   private String studentId;
-  private String name;
+  private String studentName;
   private long sex;
   private long age;
   private String classId;
@@ -19,12 +19,12 @@ public class Student {
   }
 
 
-  public String getName() {
-    return name;
+  public String getStudentName() {
+    return studentName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setStudentName(String studentName) {
+    this.studentName = studentName;
   }
 
 

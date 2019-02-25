@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.fangqcloud.mapper.ScoreMapper">
+    <resultMap id="BaseResultMap" type="club.fangqcloud.pojo.Score">
+        <id column="studentId" jdbcType="VARCHAR" property="studentId"/>
+        <result column="grade" jdbcType="FLOAT" property="grade"/>
+        <result column="courseId" jdbcType="VARCHAR" property="courseId"/>
+    </resultMap>
+    
+    <update id="update" parameterType="club.fangqcloud.pojo.Score">
+        update score
+        set grade = #{grade}
+        where studentId = #{studentId}
+        and courseId = #{courseId}
+    </update>
+</mapper>
